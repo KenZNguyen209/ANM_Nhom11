@@ -18,82 +18,89 @@ class MainWindow : public QWidget {
 
 public:
     MainWindow(QWidget *parent = nullptr) {
-        setWindowTitle("Mẫu Chữ Ký Số");
+        setWindowTitle("Digital Signature Form");
 
-        // Nhãn
-        QLabel *nhanChon = new QLabel("1. Chọn 2 số ngẫu nhiên");
-        QLabel *nhanP = new QLabel("Số p");
-        QLabel *nhanQ = new QLabel("Số q");
-        QLabel *nhanKhoaBiMat = new QLabel("Khóa bí mật");
-        QLabel *nhanKhoaCongKhai = new QLabel("Khóa công khai");
-        QLabel *nhanKyVanBan = new QLabel("Ký văn bản");
-        QLabel *nhanVanBan = new QLabel("Văn bản");
-        QLabel *nhanKetQua = new QLabel("Kết quả");
-        QLabel *nhanXacNhan = new QLabel("Xác nhận");
+        // Labels
+        QLabel *labelChoose = new QLabel("1. Chọn 2 số ngẫu nhiên");
+        QLabel *labelP = new QLabel("Số p");
+        QLabel *labelQ = new QLabel("Số q");
+        QLabel *labelPrivateKey = new QLabel("Khóa bí mật");
+        QLabel *labelPublicKey = new QLabel("Khóa công khai");
+        QLabel *labelSignText = new QLabel("Ký văn bản");
+        QLabel *labelText = new QLabel("Văn bản");
+        QLabel *labelSignature = new QLabel("Chữ ký");
+        QLabel *labelVerify = new QLabel("Xác nhận");
 
-        // Các trường nhập
+        // Input fields
         editP = new QLineEdit;
         editQ = new QLineEdit;
-        editKhoaBiMat = new QLineEdit;
-        editKhoaCongKhai = new QLineEdit;
-        editVanBan = new QLineEdit;
-        editKetQuaKy = new QLineEdit;
-        editVanBanXacNhan = new QLineEdit;
-        editKetQuaXacNhan = new QLineEdit;
+        editPrivateKey = new QLineEdit;
+        editPublicKey = new QLineEdit;
+        editText = new QLineEdit;
+        editSignResult = new QLineEdit;
+        editVerifyText = new QLineEdit;
+        editVerifySignature = new QLineEdit;
+        editVerifyResult = new QLineEdit;
 
-        // Các nút bấm
-        QPushButton *nutNgauNhien = new QPushButton("Ngẫu nhiên");
-        QPushButton *nutSinhKhoa = new QPushButton("Sinh khóa");
-        QPushButton *nutKy = new QPushButton("Ký văn bản");
-        QPushButton *nutXacNhan = new QPushButton("Xác nhận");
-        QPushButton *nutTaiFile = new QPushButton("Tải văn bản");
-        QPushButton *nutLuuFile = new QPushButton("Lưu văn bản");
-        QPushButton *nutTaiVaKiemTra = new QPushButton("Tải và kiểm tra");
+        // Buttons
+        QPushButton *btnRandom = new QPushButton("Ngẫu nhiên");
+        QPushButton *btnGenerateKey = new QPushButton("Sinh khóa");
+        QPushButton *btnSign = new QPushButton("Ký văn bản");
+        QPushButton *btnVerify = new QPushButton("Xác nhận");
+        QPushButton *btnLoadFile = new QPushButton("Tải văn bản");
+        QPushButton *btnSaveFile = new QPushButton("Lưu chữ ký");
+        QPushButton *btnLoadSignature = new QPushButton("Tải chữ ký");
+        QPushButton *btnLoadVerifyFile = new QPushButton("Tải văn bản kiểm tra");
 
-        // Thiết lập giao diện
+        // Layout setup
         QGridLayout *layout = new QGridLayout;
-        layout->addWidget(nhanChon, 0, 0, 1, 2);
-        layout->addWidget(nhanP, 1, 0);
+        layout->addWidget(labelChoose, 0, 0, 1, 2);
+        layout->addWidget(labelP, 1, 0);
         layout->addWidget(editP, 1, 1);
-        layout->addWidget(nhanQ, 1, 2);
+        layout->addWidget(labelQ, 1, 2);
         layout->addWidget(editQ, 1, 3);
-        layout->addWidget(nhanKhoaBiMat, 2, 0);
-        layout->addWidget(editKhoaBiMat, 2, 1);
-        layout->addWidget(nhanKhoaCongKhai, 2, 2);
-        layout->addWidget(editKhoaCongKhai, 2, 3);
-        layout->addWidget(nutNgauNhien, 3, 0, 1, 2);
-        layout->addWidget(nutSinhKhoa, 3, 2, 1, 2);
+        layout->addWidget(labelPrivateKey, 2, 0);
+        layout->addWidget(editPrivateKey, 2, 1);
+        layout->addWidget(labelPublicKey, 2, 2);
+        layout->addWidget(editPublicKey, 2, 3);
+        layout->addWidget(btnRandom, 3, 0, 1, 2);
+        layout->addWidget(btnGenerateKey, 3, 2, 1, 2);
 
-        layout->addWidget(nhanKyVanBan, 4, 0, 1, 4);
-        layout->addWidget(nhanVanBan, 5, 0);
-        layout->addWidget(editVanBan, 5, 1, 1, 2);
-        layout->addWidget(nutTaiFile, 5, 3);
-        layout->addWidget(nhanKetQua, 6, 0);
-        layout->addWidget(editKetQuaKy, 6, 1, 1, 3);
-        layout->addWidget(nutKy, 7, 3);
-        layout->addWidget(nutLuuFile, 8, 3);
+        layout->addWidget(labelSignText, 4, 0, 1, 4);
+        layout->addWidget(labelText, 5, 0);
+        layout->addWidget(editText, 5, 1, 1, 2);
+        layout->addWidget(btnLoadFile, 5, 3);
+        layout->addWidget(labelSignature, 6, 0);
+        layout->addWidget(editSignResult, 6, 1, 1, 2);
+        layout->addWidget(btnSign, 6, 3);
+        layout->addWidget(btnSaveFile, 7, 3);
 
-        layout->addWidget(nhanXacNhan, 9, 0, 1, 4);
-        layout->addWidget(editVanBanXacNhan, 10, 1, 1, 3);
-        layout->addWidget(nutTaiVaKiemTra, 10, 0);
-        layout->addWidget(nhanKetQua, 11, 0);
-        layout->addWidget(editKetQuaXacNhan, 11, 1, 1, 3);
-        layout->addWidget(nutXacNhan, 12, 3);
+        layout->addWidget(labelVerify, 8, 0, 1, 4);
+        layout->addWidget(new QLabel("Văn bản kiểm tra"), 9, 0);
+        layout->addWidget(editVerifyText, 9, 1, 1, 2);
+        layout->addWidget(btnLoadVerifyFile, 9, 3);
+        layout->addWidget(new QLabel("Chữ ký kiểm tra"), 10, 0);
+        layout->addWidget(editVerifySignature, 10, 1, 1, 2);
+        layout->addWidget(btnLoadSignature, 10, 3);
+        layout->addWidget(new QLabel("Kết quả kiểm tra"), 11, 0);
+        layout->addWidget(editVerifyResult, 11, 1, 1, 3);
+        layout->addWidget(btnVerify, 12, 3);
 
         setLayout(layout);
 
-        // Kết nối tín hiệu và khe cắm
-        connect(nutNgauNhien, &QPushButton::clicked, this, &MainWindow::taoSoNgauNhien);
-        connect(nutSinhKhoa, &QPushButton::clicked, this, &MainWindow::sinhKhoa);
-        connect(nutTaiFile, &QPushButton::clicked, this, &MainWindow::taiFile);
-        connect(nutKy, &QPushButton::clicked, this, &MainWindow::kyVanBan);
-        connect(nutLuuFile, &QPushButton::clicked, this, &MainWindow::luuVanBanKy);
-        connect(nutTaiVaKiemTra, &QPushButton::clicked, this, &MainWindow::taiVaKiemTraFile);
-        connect(nutXacNhan, &QPushButton::clicked, this, &MainWindow::xacNhanVanBan);
+        // Connect signals and slots
+        connect(btnRandom, &QPushButton::clicked, this, &MainWindow::generateRandomNumbers);
+        connect(btnGenerateKey, &QPushButton::clicked, this, &MainWindow::generateKeys);
+        connect(btnLoadFile, &QPushButton::clicked, this, &MainWindow::loadFile);
+        connect(btnSign, &QPushButton::clicked, this, &MainWindow::signText);
+        connect(btnSaveFile, &QPushButton::clicked, this, &MainWindow::saveSignature);
+        connect(btnLoadSignature, &QPushButton::clicked, this, &MainWindow::loadSignature);
+        connect(btnLoadVerifyFile, &QPushButton::clicked, this, &MainWindow::loadVerifyFile);
+        connect(btnVerify, &QPushButton::clicked, this, &MainWindow::verifyText);
     }
 
 private:
-    bool laSoNguyenTo(int num) {
+    bool isPrime(int num) {
         if (num <= 1) return false;
         for (int i = 2; i <= std::sqrt(num); ++i) {
             if (num % i == 0) return false;
@@ -101,7 +108,7 @@ private:
         return true;
     }
 
-    int ucln(int a, int b) {
+    int gcd(int a, int b) {
         while (b != 0) {
             int temp = b;
             b = a % b;
@@ -110,20 +117,19 @@ private:
         return a;
     }
 
-    int moDoiSo(int base, int exp, int mod) {
+    int modExp(int base, int exp, int mod) {
         int result = 1;
-        base = base % mod;
         while (exp > 0) {
             if (exp % 2 == 1) {
                 result = (result * base) % mod;
             }
-            exp = exp >> 1;
             base = (base * base) % mod;
+            exp /= 2;
         }
         return result;
     }
 
-    int nghichDaoMod(int a, int m) {
+    int modInverse(int a, int m) {
         a = a % m;
         for (int x = 1; x < m; x++) {
             if ((a * x) % m == 1) {
@@ -133,7 +139,7 @@ private:
         return -1;
     }
 
-    void taoSoNgauNhien() {
+    void generateRandomNumbers() {
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dist(2, 100);
@@ -141,17 +147,17 @@ private:
         int p, q;
         do {
             p = dist(gen);
-        } while (!laSoNguyenTo(p));
+        } while (!isPrime(p));
 
         do {
             q = dist(gen);
-        } while (!laSoNguyenTo(q) || q == p);
+        } while (!isPrime(q) || q == p);
 
         editP->setText(QString::number(p));
         editQ->setText(QString::number(q));
     }
 
-    void sinhKhoa() {
+    void generateKeys() {
         if (editP->text().isEmpty() || editQ->text().isEmpty()) {
             QMessageBox::warning(this, "Lỗi", "Vui lòng nhập số p và q!");
             return;
@@ -159,7 +165,7 @@ private:
         int p = editP->text().toInt();
         int q = editQ->text().toInt();
 
-        if (!laSoNguyenTo(p) || !laSoNguyenTo(q)) {
+        if (!isPrime(p) || !isPrime(q)) {
             QMessageBox::warning(this, "Lỗi", "Cả hai số p và q phải là số nguyên tố!");
             return;
         }
@@ -170,25 +176,25 @@ private:
         int e;
         do {
             e = 3 + rand() % (phi - 3);
-        } while (ucln(e, phi) != 1);
+        } while (gcd(e, phi) != 1);
 
-        int d = nghichDaoMod(e, phi);
+        int d = modInverse(e, phi);
         if (d == -1) {
             QMessageBox::warning(this, "Lỗi", "Không thể tạo khóa!");
             return;
         }
 
-        editKhoaBiMat->setText(QString::number(d));
-        editKhoaCongKhai->setText(QString::number(e));
-        nValue = n; // Lưu n cho các phép toán sau
+        editPrivateKey->setText(QString::number(d));
+        editPublicKey->setText(QString::number(e));
+        nValue = n; // Store n for further operations
     }
 
-    void taiFile() {
+    void loadFile() {
         QString fileName = QFileDialog::getOpenFileName(this, "Mở tệp văn bản", "", "Text Files (*.txt);;All Files (*)");
         if (!fileName.isEmpty()) {
             QFile file(fileName);
             if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                editVanBan->setText(file.readAll());
+                editText->setText(file.readAll());
                 file.close();
             } else {
                 QMessageBox::warning(this, "Lỗi", "Không thể mở tệp!");
@@ -196,86 +202,97 @@ private:
         }
     }
 
-    void kyVanBan() {
-        if (editVanBan->text().isEmpty() || editKhoaBiMat->text().isEmpty()) {
+    void loadVerifyFile() {
+        QString fileName = QFileDialog::getOpenFileName(this, "Mở tệp văn bản kiểm tra", "", "Text Files (*.txt);;All Files (*)");
+        if (!fileName.isEmpty()) {
+            QFile file(fileName);
+            if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                editVerifyText->setText(file.readAll());
+                file.close();
+            } else {
+                QMessageBox::warning(this, "Lỗi", "Không thể mở tệp!");
+            }
+        }
+    }
+
+    void signText() {
+        if (editText->text().isEmpty() || editPrivateKey->text().isEmpty()) {
             QMessageBox::warning(this, "Lỗi", "Vui lòng nhập văn bản và khóa bí mật!");
             return;
         }
 
-        QString inputText = editVanBan->text();
-        int d = editKhoaBiMat->text().toInt();
+        QString inputText = editText->text();
+        int d = editPrivateKey->text().toInt();
         QString signedText;
         for (QChar c : inputText) {
             int m = c.unicode();
-            int s = moDoiSo(m, d, nValue);
+            int s = modExp(m, d, nValue);
             signedText.append(QString::number(s) + " ");
         }
-        editKetQuaKy->setText(signedText.trimmed());
+        editSignResult->setText(signedText.trimmed());
     }
 
-    void luuVanBanKy() {
-        QString fileName = QFileDialog::getSaveFileName(this, "Lưu tệp ký", "", "Text Files (*.txt);;All Files (*)");
+    void saveSignature() {
+        QString fileName = QFileDialog::getSaveFileName(this, "Lưu chữ ký", "", "Text Files (*.txt);;All Files (*)");
         if (!fileName.isEmpty()) {
             QFile file(fileName);
             if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
                 QTextStream out(&file);
-                out << editKetQuaKy->text();
+                out << editSignResult->text();
                 file.close();
-                QMessageBox::information(this, "Thành công", "Tệp ký đã được lưu!");
+                QMessageBox::information(this, "Thành công", "Chữ ký đã được lưu!");
             } else {
                 QMessageBox::warning(this, "Lỗi", "Không thể lưu tệp!");
             }
         }
     }
 
-    void taiVaKiemTraFile() {
-        QString fileName = QFileDialog::getOpenFileName(this, "Mở tệp ký", "", "Text Files (*.txt);;All Files (*)");
+    void loadSignature() {
+        QString fileName = QFileDialog::getOpenFileName(this, "Mở chữ ký", "", "Text Files (*.txt);;All Files (*)");
         if (!fileName.isEmpty()) {
             QFile file(fileName);
             if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                QString signedText = file.readAll();
+                editVerifySignature->setText(file.readAll());
                 file.close();
-
-                editVanBanXacNhan->setText(signedText);
-                xacNhanVanBan();
             } else {
-                QMessageBox::warning(this, "Lỗi", "Không thể mở tệp!");
+                QMessageBox::warning(this, "Lỗi", "Không thể mở tệp chữ ký!");
             }
         }
     }
 
-    void xacNhanVanBan() {
-        if (editVanBanXacNhan->text().isEmpty() || editKhoaCongKhai->text().isEmpty()) {
-            QMessageBox::warning(this, "Lỗi", "Vui lòng nhập văn bản và khóa công khai!");
+    void verifyText() {
+        if (editVerifyText->text().isEmpty() || editVerifySignature->text().isEmpty() || editPublicKey->text().isEmpty()) {
+            QMessageBox::warning(this, "Lỗi", "Vui lòng nhập văn bản, chữ ký và khóa công khai!");
             return;
         }
 
-        QStringList signedValues = editVanBanXacNhan->text().split(" ");
-        int e = editKhoaCongKhai->text().toInt();
+        QStringList signedValues = editVerifySignature->text().split(" ");
+        int e = editPublicKey->text().toInt();
         QString verifiedText;
 
         for (const QString &value : signedValues) {
             int s = value.toInt();
-            int m = moDoiSo(s, e, nValue);
+            int m = modExp(s, e, nValue);
             verifiedText.append(QChar(m));
         }
 
-        if (verifiedText == editVanBan->text()) {
-            editKetQuaXacNhan->setText("Hợp lệ");
+        if (verifiedText == editVerifyText->text()) {
+            editVerifyResult->setText("Hợp lệ");
         } else {
-            editKetQuaXacNhan->setText("Không hợp lệ");
+            editVerifyResult->setText("Không hợp lệ");
         }
     }
 
 private:
     QLineEdit *editP;
     QLineEdit *editQ;
-    QLineEdit *editKhoaBiMat;
-    QLineEdit *editKhoaCongKhai;
-    QLineEdit *editVanBan;
-    QLineEdit *editKetQuaKy;
-    QLineEdit *editVanBanXacNhan;
-    QLineEdit *editKetQuaXacNhan;
+    QLineEdit *editPrivateKey;
+    QLineEdit *editPublicKey;
+    QLineEdit *editText;
+    QLineEdit *editSignResult;
+    QLineEdit *editVerifyText;
+    QLineEdit *editVerifySignature;
+    QLineEdit *editVerifyResult;
 
     int nValue;
 };
